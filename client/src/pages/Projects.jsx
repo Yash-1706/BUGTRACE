@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import projectAPI from '../api/projectAPI';
-import useAuthStore from '../store/useAuthStore';
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import projectAPI from "../api/projectAPI";
+import useAuthStore from "../store/useAuthStore";
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -13,7 +13,7 @@ const Projects = () => {
         const data = await projectAPI.getProjects(token);
         setProjects(data);
       } catch (error) {
-        console.error('Failed to fetch projects:', error);
+        console.error("Failed to fetch projects:", error);
       }
     };
 
@@ -23,12 +23,12 @@ const Projects = () => {
   }, [token]);
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this project?')) {
+    if (window.confirm("Are you sure you want to delete this project?")) {
       try {
         await projectAPI.deleteProject(id, token);
-        setProjects(projects.filter(project => project._id !== id));
+        setProjects(projects.filter((project) => project._id !== id));
       } catch (error) {
-        console.error('Failed to delete project:', error);
+        console.error("Failed to delete project:", error);
       }
     }
   };
@@ -37,7 +37,7 @@ const Projects = () => {
     <div className="container mx-auto px-4 py-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Projects</h1>
-        {user?.role === 'admin' && (
+        {user?.role === "admin" && (
           <Link
             to="/projects/new"
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -73,7 +73,7 @@ const Projects = () => {
                 >
                   View
                 </Link>
-                {user?.role === 'admin' && (
+                {user?.role === "admin" && (
                   <button
                     onClick={() => handleDelete(project._id)}
                     className="text-red-600 hover:underline"
