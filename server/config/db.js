@@ -23,7 +23,11 @@ const connectDB = async () => {
 
   } catch (error) {
     console.error('Database connection error:', error.message);
-    process.exit(1);
+    console.log('Server will continue running without database connection for development purposes');
+    // Don't exit process in development - allow server to run without DB
+    if (process.env.NODE_ENV === 'production') {
+      process.exit(1);
+    }
   }
 };
 
