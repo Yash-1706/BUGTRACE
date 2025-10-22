@@ -248,12 +248,12 @@ const IssueDetails = () => {
                     >
                       <div className="flex items-start space-x-3">
                         <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                          {comment.author.username.charAt(0).toUpperCase()}
+                          {comment.author?.username?.charAt(0)?.toUpperCase() || '?'}
                         </div>
                         <div className="flex-1">
                           <div className="flex items-center space-x-2 mb-2">
                             <span className="font-medium text-gray-900">
-                              {comment.author.username}
+                              {comment.author?.username || 'Unknown User'}
                             </span>
                             <span className="text-sm text-gray-500">
                               {new Date(comment.createdAt).toLocaleDateString(
@@ -400,10 +400,10 @@ const IssueDetails = () => {
                   </label>
                   <div className="flex items-center space-x-2">
                     <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                      {issue.reporter.username.charAt(0).toUpperCase()}
+                      {issue.reporter?.username?.charAt(0)?.toUpperCase() || '?'}
                     </div>
                     <span className="text-gray-900">
-                      {issue.reporter.username}
+                      {issue.reporter?.username || 'Unknown User'}
                     </span>
                   </div>
                 </div>
@@ -436,10 +436,10 @@ const IssueDetails = () => {
                   ) : issue.assignee ? (
                     <div className="flex items-center space-x-2">
                       <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
-                        {issue.assignee.username.charAt(0).toUpperCase()}
+                        {issue.assignee.username?.charAt(0)?.toUpperCase() || '?'}
                       </div>
                       <span className="text-gray-900">
-                        {issue.assignee.username}
+                        {issue.assignee.username || 'Unknown User'}
                       </span>
                     </div>
                   ) : (
