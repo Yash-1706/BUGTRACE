@@ -3,6 +3,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/errorMiddleware');
+const { configureCloudinary } = require('./config/cloudinary');
+const { multerErrorHandler } = require('./middleware/uploadMiddleware');
 
 dotenv.config();
 
@@ -10,6 +12,9 @@ const app = express();
 
 // Connect to MongoDB
 connectDB();
+
+// Configure third-party services
+configureCloudinary();
 
 // Middleware
 app.use(cors());
@@ -24,6 +29,9 @@ app.use('/api/issues', require('./routes/issueRoutes'));
 app.get('/test', (req, res) => {
   res.json({ message: 'Server is working' });
 });
+
+// Multer error handler
+app.use(multerErrorHandler);
 
 // Error Handler (should be last)
 app.use(errorHandler);
