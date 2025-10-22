@@ -31,7 +31,10 @@ const addComment = async (req, res) => {
       $push: { comments: comment._id },
     });
 
-    res.status(201).json(comment);
+    // Populate author before returning
+    const populatedComment = await Comment.findById(comment._id).populate('author', 'username email');
+
+    res.status(201).json(populatedComment);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
