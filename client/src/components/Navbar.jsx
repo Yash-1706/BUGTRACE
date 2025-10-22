@@ -15,7 +15,10 @@ const Navbar = () => {
     <nav className="bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg">
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
-          <Link to="/" className="text-2xl font-bold hover:text-blue-200 transition-colors">
+          <Link
+            to="/"
+            className="text-2xl font-bold hover:text-blue-200 transition-colors"
+          >
             🐛 BugTrace
           </Link>
           <div className="flex items-center space-x-6">

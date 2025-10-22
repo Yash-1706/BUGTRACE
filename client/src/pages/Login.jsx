@@ -48,9 +48,7 @@ const Login = () => {
             <h2 className="text-3xl font-bold text-gray-900 mb-2">
               Welcome Back
             </h2>
-            <p className="text-gray-600">
-              Sign in to your BugTrace account
-            </p>
+            <p className="text-gray-600">Sign in to your BugTrace account</p>
           </div>
 
           <form className="mt-8 space-y-6" onSubmit={onSubmit}>
@@ -62,7 +60,10 @@ const Login = () => {
 
             <div className="space-y-4">
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Email Address
                 </label>
                 <input
@@ -78,7 +79,10 @@ const Login = () => {
               </div>
 
               <div>
-                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   Password
                 </label>
                 <input

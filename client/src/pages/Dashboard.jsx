@@ -88,7 +88,9 @@ const Dashboard = () => {
           <div className="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-blue-100 text-sm font-medium">Total Issues</p>
+                <p className="text-blue-100 text-sm font-medium">
+                  Total Issues
+                </p>
                 <p className="text-3xl font-bold">{issues.length}</p>
               </div>
               <div className="text-4xl">📊</div>
@@ -108,8 +110,12 @@ const Dashboard = () => {
           <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl p-6 text-white shadow-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-orange-100 text-sm font-medium">In Progress</p>
-                <p className="text-3xl font-bold">{stats["In Progress"] || 0}</p>
+                <p className="text-orange-100 text-sm font-medium">
+                  In Progress
+                </p>
+                <p className="text-3xl font-bold">
+                  {stats["In Progress"] || 0}
+                </p>
               </div>
               <div className="text-4xl">⚡</div>
             </div>
@@ -138,8 +144,12 @@ const Dashboard = () => {
           {issues.length === 0 ? (
             <div className="text-center py-12">
               <div className="text-6xl mb-4">📝</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No issues yet</h3>
-              <p className="text-gray-600">Create your first issue to get started!</p>
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                No issues yet
+              </h3>
+              <p className="text-gray-600">
+                Create your first issue to get started!
+              </p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -150,14 +160,18 @@ const Dashboard = () => {
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <h3 className="font-semibold text-gray-900 mb-1">{issue.title}</h3>
+                      <h3 className="font-semibold text-gray-900 mb-1">
+                        {issue.title}
+                      </h3>
                       <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                         {issue.description}
                       </p>
                       <div className="flex items-center space-x-4 text-xs text-gray-500">
                         <span>By {issue.reporter?.username}</span>
                         <span>•</span>
-                        <span>{new Date(issue.createdAt).toLocaleDateString()}</span>
+                        <span>
+                          {new Date(issue.createdAt).toLocaleDateString()}
+                        </span>
                       </div>
                     </div>
                     <div className="flex flex-col items-end space-y-2">

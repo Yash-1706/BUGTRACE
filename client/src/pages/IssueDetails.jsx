@@ -20,7 +20,7 @@ const IssueDetails = () => {
       try {
         const [issueData, commentsData] = await Promise.all([
           issueAPI.getIssue(id, token),
-          commentAPI.getComments(id, token)
+          commentAPI.getComments(id, token),
         ]);
 
         setIssue(issueData);
@@ -45,11 +45,11 @@ const IssueDetails = () => {
     try {
       const commentData = {
         issue: id,
-        text: newComment.trim()
+        text: newComment.trim(),
       };
 
       const addedComment = await commentAPI.addComment(id, commentData, token);
-      setComments(prev => [...prev, addedComment]);
+      setComments((prev) => [...prev, addedComment]);
       setNewComment("");
     } catch (error) {
       console.error("Failed to add comment:", error);
@@ -113,8 +113,10 @@ const IssueDetails = () => {
   };
 
   const canEditIssue = () => {
-    return user?.role === "admin" ||
-           (user?.role === "developer" && issue?.assignee?._id === user._id);
+    return (
+      user?.role === "admin" ||
+      (user?.role === "developer" && issue?.assignee?._id === user._id)
+    );
   };
 
   if (loading) {
@@ -130,8 +132,12 @@ const IssueDetails = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="text-8xl mb-6">🐛</div>
-          <h3 className="text-2xl font-semibold text-gray-900 mb-2">Issue not found</h3>
-          <p className="text-gray-600 mb-6">The issue you're looking for doesn't exist.</p>
+          <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+            Issue not found
+          </h3>
+          <p className="text-gray-600 mb-6">
+            The issue you're looking for doesn't exist.
+          </p>
           <Link
             to="/issues"
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
@@ -150,11 +156,15 @@ const IssueDetails = () => {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">{issue.title}</h1>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                {issue.title}
+              </h1>
               <div className="flex items-center space-x-4 text-sm text-gray-600">
                 <span>Issue #{issue._id.slice(-6)}</span>
                 <span>•</span>
-                <span>Created {new Date(issue.createdAt).toLocaleDateString()}</span>
+                <span>
+                  Created {new Date(issue.createdAt).toLocaleDateString()}
+                </span>
               </div>
             </div>
             {canEditIssue() && (
@@ -173,16 +183,25 @@ const IssueDetails = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* Issue Description */}
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Description</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Description
+              </h3>
               {editMode ? (
                 <textarea
                   value={editData.description || issue.description}
-                  onChange={(e) => setEditData(prev => ({ ...prev, description: e.target.value }))}
+                  onChange={(e) =>
+                    setEditData((prev) => ({
+                      ...prev,
+                      description: e.target.value,
+                    }))
+                  }
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                   rows={6}
                 />
               ) : (
-                <p className="text-gray-700 whitespace-pre-wrap">{issue.description}</p>
+                <p className="text-gray-700 whitespace-pre-wrap">
+                  {issue.description}
+                </p>
               )}
             </div>
 
@@ -217,11 +236,16 @@ const IssueDetails = () => {
                 {comments.length === 0 ? (
                   <div className="text-center py-8">
                     <div className="text-4xl mb-4">💬</div>
-                    <p className="text-gray-500">No comments yet. Be the first to comment!</p>
+                    <p className="text-gray-500">
+                      No comments yet. Be the first to comment!
+                    </p>
                   </div>
                 ) : (
                   comments.map((comment) => (
-                    <div key={comment._id} className="border border-gray-200 rounded-lg p-4">
+                    <div
+                      key={comment._id}
+                      className="border border-gray-200 rounded-lg p-4"
+                    >
                       <div className="flex items-start space-x-3">
                         <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
                           {comment.author.username.charAt(0).toUpperCase()}
@@ -232,16 +256,21 @@ const IssueDetails = () => {
                               {comment.author.username}
                             </span>
                             <span className="text-sm text-gray-500">
-                              {new Date(comment.createdAt).toLocaleDateString('en-US', {
-                                year: 'numeric',
-                                month: 'short',
-                                day: 'numeric',
-                                hour: '2-digit',
-                                minute: '2-digit'
-                              })}
+                              {new Date(comment.createdAt).toLocaleDateString(
+                                "en-US",
+                                {
+                                  year: "numeric",
+                                  month: "short",
+                                  day: "numeric",
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                }
+                              )}
                             </span>
                           </div>
-                          <p className="text-gray-700 whitespace-pre-wrap">{comment.text}</p>
+                          <p className="text-gray-700 whitespace-pre-wrap">
+                            {comment.text}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -259,11 +288,18 @@ const IssueDetails = () => {
               <div className="space-y-4">
                 {/* Status */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Status
+                  </label>
                   {editMode ? (
                     <select
                       value={editData.status || issue.status}
-                      onChange={(e) => setEditData(prev => ({ ...prev, status: e.target.value }))}
+                      onChange={(e) =>
+                        setEditData((prev) => ({
+                          ...prev,
+                          status: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     >
                       <option value="Open">Open</option>
@@ -272,7 +308,11 @@ const IssueDetails = () => {
                       <option value="Closed">Closed</option>
                     </select>
                   ) : (
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(issue.status)}`}>
+                    <span
+                      className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(
+                        issue.status
+                      )}`}
+                    >
                       {issue.status}
                     </span>
                   )}
@@ -280,11 +320,18 @@ const IssueDetails = () => {
 
                 {/* Severity */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Severity</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Severity
+                  </label>
                   {editMode ? (
                     <select
                       value={editData.severity || issue.severity}
-                      onChange={(e) => setEditData(prev => ({ ...prev, severity: e.target.value }))}
+                      onChange={(e) =>
+                        setEditData((prev) => ({
+                          ...prev,
+                          severity: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     >
                       <option value="Low">Low</option>
@@ -293,7 +340,11 @@ const IssueDetails = () => {
                       <option value="Critical">Critical</option>
                     </select>
                   ) : (
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getSeverityColor(issue.severity)}`}>
+                    <span
+                      className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getSeverityColor(
+                        issue.severity
+                      )}`}
+                    >
                       {issue.severity}
                     </span>
                   )}
@@ -301,11 +352,18 @@ const IssueDetails = () => {
 
                 {/* Priority */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Priority</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Priority
+                  </label>
                   {editMode ? (
                     <select
                       value={editData.priority || issue.priority}
-                      onChange={(e) => setEditData(prev => ({ ...prev, priority: e.target.value }))}
+                      onChange={(e) =>
+                        setEditData((prev) => ({
+                          ...prev,
+                          priority: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     >
                       <option value="P1">P1 - Critical</option>
@@ -314,7 +372,9 @@ const IssueDetails = () => {
                     </select>
                   ) : (
                     <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 rounded-full text-sm font-medium border border-blue-300">
-                      <span className="mr-1">{getPriorityIcon(issue.priority)}</span>
+                      <span className="mr-1">
+                        {getPriorityIcon(issue.priority)}
+                      </span>
                       {issue.priority}
                     </span>
                   )}
@@ -322,7 +382,9 @@ const IssueDetails = () => {
 
                 {/* Project */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Project</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Project
+                  </label>
                   <Link
                     to={`/projects/${issue.project._id}`}
                     className="text-blue-600 hover:text-blue-800 transition-colors"
@@ -333,27 +395,38 @@ const IssueDetails = () => {
 
                 {/* Reporter */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Reporter</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Reporter
+                  </label>
                   <div className="flex items-center space-x-2">
                     <div className="w-6 h-6 bg-gradient-to-r from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-bold text-xs">
                       {issue.reporter.username.charAt(0).toUpperCase()}
                     </div>
-                    <span className="text-gray-900">{issue.reporter.username}</span>
+                    <span className="text-gray-900">
+                      {issue.reporter.username}
+                    </span>
                   </div>
                 </div>
 
                 {/* Assignee */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Assignee</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Assignee
+                  </label>
                   {editMode ? (
                     <select
                       value={editData.assignee || issue.assignee?._id || ""}
-                      onChange={(e) => setEditData(prev => ({ ...prev, assignee: e.target.value }))}
+                      onChange={(e) =>
+                        setEditData((prev) => ({
+                          ...prev,
+                          assignee: e.target.value,
+                        }))
+                      }
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                     >
                       <option value="">Unassigned</option>
                       {issue.project.members
-                        .filter(member => member.role === 'developer')
+                        .filter((member) => member.role === "developer")
                         .map((developer) => (
                           <option key={developer._id} value={developer._id}>
                             {developer.username}
@@ -365,7 +438,9 @@ const IssueDetails = () => {
                       <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xs">
                         {issue.assignee.username.charAt(0).toUpperCase()}
                       </div>
-                      <span className="text-gray-900">{issue.assignee.username}</span>
+                      <span className="text-gray-900">
+                        {issue.assignee.username}
+                      </span>
                     </div>
                   ) : (
                     <span className="text-gray-500">Unassigned</span>

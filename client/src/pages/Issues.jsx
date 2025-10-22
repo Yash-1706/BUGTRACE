@@ -121,8 +121,12 @@ const Issues = () => {
         {issues.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-8xl mb-6">🐛</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-2">No issues yet</h3>
-            <p className="text-gray-600 mb-6">Create your first issue to get started!</p>
+            <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+              No issues yet
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Create your first issue to get started!
+            </p>
             {(user?.role === "tester" || user?.role === "admin") && (
               <Link
                 to="/issues/new"
@@ -141,7 +145,17 @@ const Issues = () => {
                 className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
               >
                 {/* Header with gradient */}
-                <div className={`h-2 bg-gradient-to-r ${getStatusColor(issue.status).includes('yellow') ? 'from-yellow-500 to-yellow-600' : getStatusColor(issue.status).includes('orange') ? 'from-orange-500 to-orange-600' : getStatusColor(issue.status).includes('green') ? 'from-green-500 to-green-600' : 'from-gray-500 to-gray-600'}`}></div>
+                <div
+                  className={`h-2 bg-gradient-to-r ${
+                    getStatusColor(issue.status).includes("yellow")
+                      ? "from-yellow-500 to-yellow-600"
+                      : getStatusColor(issue.status).includes("orange")
+                      ? "from-orange-500 to-orange-600"
+                      : getStatusColor(issue.status).includes("green")
+                      ? "from-green-500 to-green-600"
+                      : "from-gray-500 to-gray-600"
+                  }`}
+                ></div>
 
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-4">
@@ -156,19 +170,31 @@ const Issues = () => {
                         {issue.description || "No description provided"}
                       </p>
                     </div>
-                    <div className="text-2xl ml-4">{getStatusIcon(issue.status)}</div>
+                    <div className="text-2xl ml-4">
+                      {getStatusIcon(issue.status)}
+                    </div>
                   </div>
 
                   {/* Status and Severity Tags */}
                   <div className="flex flex-wrap gap-2 mb-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(issue.status)}`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
+                        issue.status
+                      )}`}
+                    >
                       {issue.status}
                     </span>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium border ${getSeverityColor(issue.severity)}`}>
+                    <span
+                      className={`px-3 py-1 rounded-full text-xs font-medium border ${getSeverityColor(
+                        issue.severity
+                      )}`}
+                    >
                       {issue.severity}
                     </span>
                     <span className="flex items-center px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 rounded-full text-xs font-medium border border-blue-300">
-                      <span className="mr-1">{getPriorityIcon(issue.priority)}</span>
+                      <span className="mr-1">
+                        {getPriorityIcon(issue.priority)}
+                      </span>
                       {issue.priority}
                     </span>
                   </div>
@@ -178,7 +204,10 @@ const Issues = () => {
                     <div className="flex items-center space-x-2 mb-4">
                       <span className="text-lg">📁</span>
                       <span className="text-sm text-gray-600">
-                        Project: <span className="font-medium text-gray-900">{issue.project.name}</span>
+                        Project:{" "}
+                        <span className="font-medium text-gray-900">
+                          {issue.project.name}
+                        </span>
                       </span>
                     </div>
                   )}
@@ -189,14 +218,20 @@ const Issues = () => {
                       <div className="flex items-center space-x-2">
                         <span className="text-lg">👤</span>
                         <span className="text-sm text-gray-600">
-                          Reporter: <span className="font-medium text-gray-900">{issue.reporter?.username}</span>
+                          Reporter:{" "}
+                          <span className="font-medium text-gray-900">
+                            {issue.reporter?.username}
+                          </span>
                         </span>
                       </div>
                       {issue.assignee && (
                         <div className="flex items-center space-x-2">
                           <span className="text-lg">👨‍💻</span>
                           <span className="text-sm text-gray-600">
-                            Assignee: <span className="font-medium text-gray-900">{issue.assignee.username}</span>
+                            Assignee:{" "}
+                            <span className="font-medium text-gray-900">
+                              {issue.assignee.username}
+                            </span>
                           </span>
                         </div>
                       )}
@@ -207,7 +242,10 @@ const Issues = () => {
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                     <div className="flex items-center space-x-2 text-sm text-gray-500">
                       <span>📅</span>
-                      <span>Created: {new Date(issue.createdAt).toLocaleDateString()}</span>
+                      <span>
+                        Created:{" "}
+                        {new Date(issue.createdAt).toLocaleDateString()}
+                      </span>
                     </div>
                     <Link
                       to={`/issues/${issue._id}`}

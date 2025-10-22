@@ -26,9 +26,21 @@ const useAuthStore = create(
           user: { ...state.user, ...userData },
         }));
       },
+      initializeAuth: () => {
+        const state = get();
+        const isAuthenticated = !!(state.token && state.user);
+        if (state.isAuthenticated !== isAuthenticated) {
+          set({ isAuthenticated });
+        }
+      },
     }),
     {
       name: 'auth-storage',
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state.initializeAuth();
+        }
+      },
     }
   )
 );

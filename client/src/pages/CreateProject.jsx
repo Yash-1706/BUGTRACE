@@ -9,7 +9,7 @@ const CreateProject = () => {
     name: "",
     description: "",
     tags: "",
-    members: []
+    members: [],
   });
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,25 +34,25 @@ const CreateProject = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
 
   const handleMemberChange = (userId) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       members: prev.members.includes(userId)
-        ? prev.members.filter(id => id !== userId)
-        : [...prev.members, userId]
+        ? prev.members.filter((id) => id !== userId)
+        : [...prev.members, userId],
     }));
   };
 
@@ -82,7 +82,10 @@ const CreateProject = () => {
     try {
       const projectData = {
         ...formData,
-        tags: formData.tags.split(",").map(tag => tag.trim()).filter(tag => tag)
+        tags: formData.tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag),
       };
 
       await projectAPI.createProject(projectData, token);
@@ -100,7 +103,9 @@ const CreateProject = () => {
       <div className="container mx-auto px-4 max-w-2xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Create New Project</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Create New Project
+          </h1>
           <p className="text-gray-600 text-lg">
             Set up a new project and assign team members
           </p>
@@ -111,7 +116,10 @@ const CreateProject = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Project Name */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Project Name *
               </label>
               <input
@@ -132,7 +140,10 @@ const CreateProject = () => {
 
             {/* Description */}
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Description *
               </label>
               <textarea
@@ -147,13 +158,18 @@ const CreateProject = () => {
                 placeholder="Describe the project goals and scope"
               />
               {errors.description && (
-                <p className="mt-1 text-sm text-red-600">{errors.description}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.description}
+                </p>
               )}
             </div>
 
             {/* Tags */}
             <div>
-              <label htmlFor="tags" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="tags"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Tags
               </label>
               <input
@@ -177,7 +193,10 @@ const CreateProject = () => {
               </label>
               <div className="space-y-3 max-h-60 overflow-y-auto border border-gray-200 rounded-lg p-4">
                 {users.map((user) => (
-                  <label key={user._id} className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                  <label
+                    key={user._id}
+                    className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                  >
                     <input
                       type="checkbox"
                       checked={formData.members.includes(user._id)}
@@ -186,12 +205,18 @@ const CreateProject = () => {
                     />
                     <div className="flex-1">
                       <div className="flex items-center space-x-2">
-                        <span className="font-medium text-gray-900">{user.username}</span>
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          user.role === 'admin' ? 'bg-purple-100 text-purple-800' :
-                          user.role === 'developer' ? 'bg-blue-100 text-blue-800' :
-                          'bg-green-100 text-green-800'
-                        }`}>
+                        <span className="font-medium text-gray-900">
+                          {user.username}
+                        </span>
+                        <span
+                          className={`px-2 py-1 text-xs rounded-full ${
+                            user.role === "admin"
+                              ? "bg-purple-100 text-purple-800"
+                              : user.role === "developer"
+                              ? "bg-blue-100 text-blue-800"
+                              : "bg-green-100 text-green-800"
+                          }`}
+                        >
                           {user.role}
                         </span>
                       </div>

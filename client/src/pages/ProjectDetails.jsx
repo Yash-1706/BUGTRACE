@@ -16,12 +16,12 @@ const ProjectDetails = () => {
       try {
         const [projectData, issuesData] = await Promise.all([
           projectAPI.getProject(id, token),
-          issueAPI.getIssues(token)
+          issueAPI.getIssues(token),
         ]);
 
         setProject(projectData);
         // Filter issues for this project
-        setIssues(issuesData.filter(issue => issue.project?._id === id));
+        setIssues(issuesData.filter((issue) => issue.project?._id === id));
       } catch (error) {
         console.error("Failed to fetch project data:", error);
       } finally {
@@ -67,10 +67,10 @@ const ProjectDetails = () => {
   const getIssueStats = () => {
     const stats = {
       total: issues.length,
-      open: issues.filter(i => i.status === 'Open').length,
-      inProgress: issues.filter(i => i.status === 'In Progress').length,
-      resolved: issues.filter(i => i.status === 'Resolved').length,
-      closed: issues.filter(i => i.status === 'Closed').length
+      open: issues.filter((i) => i.status === "Open").length,
+      inProgress: issues.filter((i) => i.status === "In Progress").length,
+      resolved: issues.filter((i) => i.status === "Resolved").length,
+      closed: issues.filter((i) => i.status === "Closed").length,
     };
     return stats;
   };
@@ -88,8 +88,12 @@ const ProjectDetails = () => {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="text-8xl mb-6">📁</div>
-          <h3 className="text-2xl font-semibold text-gray-900 mb-2">Project not found</h3>
-          <p className="text-gray-600 mb-6">The project you're looking for doesn't exist.</p>
+          <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+            Project not found
+          </h3>
+          <p className="text-gray-600 mb-6">
+            The project you're looking for doesn't exist.
+          </p>
           <Link
             to="/projects"
             className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl"
@@ -110,7 +114,9 @@ const ProjectDetails = () => {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">{project.name}</h1>
+              <h1 className="text-4xl font-bold text-gray-900 mb-2">
+                {project.name}
+              </h1>
               <p className="text-gray-600 text-lg">{project.description}</p>
             </div>
             {(user?.role === "tester" || user?.role === "admin") && (
@@ -132,8 +138,12 @@ const ProjectDetails = () => {
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">Total Issues</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.total}</p>
+                <p className="text-sm font-medium text-gray-600">
+                  Total Issues
+                </p>
+                <p className="text-3xl font-bold text-gray-900">
+                  {stats.total}
+                </p>
               </div>
               <div className="text-3xl">📊</div>
             </div>
@@ -143,7 +153,9 @@ const ProjectDetails = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Open</p>
-                <p className="text-3xl font-bold text-yellow-600">{stats.open}</p>
+                <p className="text-3xl font-bold text-yellow-600">
+                  {stats.open}
+                </p>
               </div>
               <div className="text-3xl">🔓</div>
             </div>
@@ -153,7 +165,9 @@ const ProjectDetails = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">In Progress</p>
-                <p className="text-3xl font-bold text-orange-600">{stats.inProgress}</p>
+                <p className="text-3xl font-bold text-orange-600">
+                  {stats.inProgress}
+                </p>
               </div>
               <div className="text-3xl">⚡</div>
             </div>
@@ -163,7 +177,9 @@ const ProjectDetails = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-gray-600">Resolved</p>
-                <p className="text-3xl font-bold text-green-600">{stats.resolved + stats.closed}</p>
+                <p className="text-3xl font-bold text-green-600">
+                  {stats.resolved + stats.closed}
+                </p>
               </div>
               <div className="text-3xl">✅</div>
             </div>
@@ -175,16 +191,22 @@ const ProjectDetails = () => {
           {/* Project Details */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Project Details</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Project Details
+              </h3>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Description
+                  </label>
                   <p className="text-gray-600">{project.description}</p>
                 </div>
 
                 {project.tags && project.tags.length > 0 && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Tags</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Tags
+                    </label>
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag, index) => (
                         <span
@@ -199,12 +221,14 @@ const ProjectDetails = () => {
                 )}
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Created</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Created
+                  </label>
                   <p className="text-gray-600">
-                    {new Date(project.createdAt).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
+                    {new Date(project.createdAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </p>
                 </div>
@@ -215,17 +239,26 @@ const ProjectDetails = () => {
           {/* Team Members */}
           <div>
             <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">Team Members</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-4">
+                Team Members
+              </h3>
               {project.members && project.members.length > 0 ? (
                 <div className="space-y-3">
                   {project.members.map((member) => (
-                    <div key={member._id} className="flex items-center space-x-3">
+                    <div
+                      key={member._id}
+                      className="flex items-center space-x-3"
+                    >
                       <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold">
                         {member.username.charAt(0).toUpperCase()}
                       </div>
                       <div>
-                        <p className="font-medium text-gray-900">{member.username}</p>
-                        <p className="text-sm text-gray-500 capitalize">{member.role}</p>
+                        <p className="font-medium text-gray-900">
+                          {member.username}
+                        </p>
+                        <p className="text-sm text-gray-500 capitalize">
+                          {member.role}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -254,8 +287,12 @@ const ProjectDetails = () => {
           {issues.length === 0 ? (
             <div className="text-center py-8">
               <div className="text-6xl mb-4">🐛</div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">No issues yet</h4>
-              <p className="text-gray-600 mb-4">Create the first issue for this project.</p>
+              <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                No issues yet
+              </h4>
+              <p className="text-gray-600 mb-4">
+                Create the first issue for this project.
+              </p>
               {(user?.role === "tester" || user?.role === "admin") && (
                 <Link
                   to="/issues/new"
@@ -285,10 +322,18 @@ const ProjectDetails = () => {
                         {issue.description}
                       </p>
                       <div className="flex items-center space-x-4 mt-3">
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(issue.status)}`}>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium border ${getStatusColor(
+                            issue.status
+                          )}`}
+                        >
                           {issue.status}
                         </span>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium border ${getSeverityColor(issue.severity)}`}>
+                        <span
+                          className={`px-2 py-1 rounded-full text-xs font-medium border ${getSeverityColor(
+                            issue.severity
+                          )}`}
+                        >
                           {issue.severity}
                         </span>
                         <span className="text-sm text-gray-500">

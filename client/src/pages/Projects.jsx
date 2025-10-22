@@ -84,8 +84,12 @@ const Projects = () => {
         {projects.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-8xl mb-6">📁</div>
-            <h3 className="text-2xl font-semibold text-gray-900 mb-2">No projects yet</h3>
-            <p className="text-gray-600 mb-6">Create your first project to get started!</p>
+            <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+              No projects yet
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Create your first project to get started!
+            </p>
             {user?.role === "admin" && (
               <Link
                 to="/projects/new"
@@ -104,7 +108,9 @@ const Projects = () => {
                 className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden"
               >
                 {/* Header with gradient */}
-                <div className={`h-2 bg-gradient-to-r ${getRandomColor(index)}`}></div>
+                <div
+                  className={`h-2 bg-gradient-to-r ${getRandomColor(index)}`}
+                ></div>
 
                 <div className="p-6">
                   <div className="flex items-start justify-between mb-4">

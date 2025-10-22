@@ -13,7 +13,7 @@ const CreateIssue = () => {
     severity: "Medium",
     priority: "P2",
     project: "",
-    assignee: ""
+    assignee: "",
   });
   const [projects, setProjects] = useState([]);
   const [users, setUsers] = useState([]);
@@ -27,7 +27,7 @@ const CreateIssue = () => {
       try {
         const [projectsData, usersData] = await Promise.all([
           projectAPI.getProjects(token),
-          authAPI.getUsers(token)
+          authAPI.getUsers(token),
         ]);
         setProjects(projectsData);
         setUsers(usersData);
@@ -43,15 +43,15 @@ const CreateIssue = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
     // Clear error when user starts typing
     if (errors[name]) {
-      setErrors(prev => ({
+      setErrors((prev) => ({
         ...prev,
-        [name]: ""
+        [name]: "",
       }));
     }
   };
@@ -82,7 +82,7 @@ const CreateIssue = () => {
     try {
       const issueData = {
         ...formData,
-        reporter: user._id
+        reporter: user._id,
       };
 
       await issueAPI.createIssue(issueData, token);
@@ -128,7 +128,9 @@ const CreateIssue = () => {
       <div className="container mx-auto px-4 max-w-2xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Create New Issue</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Create New Issue
+          </h1>
           <p className="text-gray-600 text-lg">
             Report a bug or create a new task for your team
           </p>
@@ -139,7 +141,10 @@ const CreateIssue = () => {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title */}
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="title"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Issue Title *
               </label>
               <input
@@ -160,7 +165,10 @@ const CreateIssue = () => {
 
             {/* Description */}
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="description"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Description *
               </label>
               <textarea
@@ -175,13 +183,18 @@ const CreateIssue = () => {
                 placeholder="Detailed description of the issue, steps to reproduce, expected vs actual behavior"
               />
               {errors.description && (
-                <p className="mt-1 text-sm text-red-600">{errors.description}</p>
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.description}
+                </p>
               )}
             </div>
 
             {/* Project Selection */}
             <div>
-              <label htmlFor="project" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="project"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Project *
               </label>
               <select
@@ -209,7 +222,10 @@ const CreateIssue = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Severity */}
               <div>
-                <label htmlFor="severity" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="severity"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Severity
                 </label>
                 <select
@@ -225,7 +241,11 @@ const CreateIssue = () => {
                   <option value="Critical">Critical</option>
                 </select>
                 <div className="mt-2">
-                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getSeverityColor(formData.severity)}`}>
+                  <span
+                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getSeverityColor(
+                      formData.severity
+                    )}`}
+                  >
                     {formData.severity}
                   </span>
                 </div>
@@ -233,7 +253,10 @@ const CreateIssue = () => {
 
               {/* Priority */}
               <div>
-                <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-2">
+                <label
+                  htmlFor="priority"
+                  className="block text-sm font-medium text-gray-700 mb-2"
+                >
                   Priority
                 </label>
                 <select
@@ -249,7 +272,9 @@ const CreateIssue = () => {
                 </select>
                 <div className="mt-2">
                   <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 rounded-full text-xs font-medium border border-blue-300">
-                    <span className="mr-1">{getPriorityIcon(formData.priority)}</span>
+                    <span className="mr-1">
+                      {getPriorityIcon(formData.priority)}
+                    </span>
                     {formData.priority}
                   </span>
                 </div>
@@ -258,7 +283,10 @@ const CreateIssue = () => {
 
             {/* Assignee */}
             <div>
-              <label htmlFor="assignee" className="block text-sm font-medium text-gray-700 mb-2">
+              <label
+                htmlFor="assignee"
+                className="block text-sm font-medium text-gray-700 mb-2"
+              >
                 Assign To (Optional)
               </label>
               <select
@@ -270,7 +298,7 @@ const CreateIssue = () => {
               >
                 <option value="">Unassigned</option>
                 {users
-                  .filter(u => u.role === 'developer')
+                  .filter((u) => u.role === "developer")
                   .map((developer) => (
                     <option key={developer._id} value={developer._id}>
                       {developer.username} ({developer.email})
