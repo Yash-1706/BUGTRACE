@@ -20,6 +20,11 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/issues', require('./routes/issueRoutes'));
 
+// Test route
+app.get('/test', (req, res) => {
+  res.json({ message: 'Server is working' });
+});
+
 // Error Handler (should be last)
 app.use(errorHandler);
 

@@ -38,7 +38,6 @@ const CreateProject = () => {
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
@@ -99,26 +98,40 @@ const CreateProject = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4 max-w-2xl">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 py-12 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-emerald-400/20 to-teal-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-cyan-400/20 to-blue-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-br from-teal-400/15 to-cyan-600/15 rounded-full blur-3xl animate-pulse delay-500"></div>
+      </div>
+
+      <div className="container mx-auto px-4 max-w-2xl relative z-10">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Create New Project
-          </h1>
-          <p className="text-gray-600 text-lg">
+        <div className="mb-12 text-center">
+          <div className="inline-block">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 bg-clip-text text-transparent mb-4 animate-fade-in">
+              Create New Project
+            </h1>
+            <div className="w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-full animate-scale-in"></div>
+          </div>
+          <p className="text-gray-600 text-xl mt-6 animate-fade-in delay-300">
             Set up a new project and assign team members
           </p>
         </div>
 
         {/* Form */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-10 border border-white/20 animate-fade-in delay-500">
+          <form onSubmit={handleSubmit} className="space-y-8">
             {/* Project Name */}
-            <div>
+            <div className="relative group">
               <label
                 htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className={`absolute left-4 transition-all duration-300 pointer-events-none ${
+                  formData.name
+                    ? "top-2 text-xs text-emerald-600 font-medium"
+                    : "top-1/2 -translate-y-1/2 text-gray-500"
+                } group-focus-within:top-2 group-focus-within:text-xs group-focus-within:text-emerald-600 group-focus-within:font-medium`}
               >
                 Project Name *
               </label>
@@ -128,21 +141,30 @@ const CreateProject = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.name ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 pt-6 pb-3 border-2 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all duration-300 bg-gray-50/50 backdrop-blur-sm ${
+                  errors.name
+                    ? "border-red-400 bg-red-50/50"
+                    : "border-gray-200 hover:border-emerald-300"
                 }`}
-                placeholder="Enter project name"
+                placeholder=""
               />
               {errors.name && (
-                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+                <p className="mt-2 text-sm text-red-600 flex items-center space-x-1">
+                  <span>⚠️</span>
+                  <span>{errors.name}</span>
+                </p>
               )}
             </div>
 
             {/* Description */}
-            <div>
+            <div className="relative group">
               <label
                 htmlFor="description"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className={`absolute left-4 transition-all duration-300 pointer-events-none ${
+                  formData.description
+                    ? "top-2 text-xs text-emerald-600 font-medium"
+                    : "top-6 text-gray-500"
+                } group-focus-within:top-2 group-focus-within:text-xs group-focus-within:text-emerald-600 group-focus-within:font-medium`}
               >
                 Description *
               </label>
@@ -152,23 +174,30 @@ const CreateProject = () => {
                 value={formData.description}
                 onChange={handleChange}
                 rows={4}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.description ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 pt-8 pb-3 border-2 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all duration-300 bg-gray-50/50 backdrop-blur-sm resize-none ${
+                  errors.description
+                    ? "border-red-400 bg-red-50/50"
+                    : "border-gray-200 hover:border-emerald-300"
                 }`}
-                placeholder="Describe the project goals and scope"
+                placeholder=""
               />
               {errors.description && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.description}
+                <p className="mt-2 text-sm text-red-600 flex items-center space-x-1">
+                  <span>⚠️</span>
+                  <span>{errors.description}</span>
                 </p>
               )}
             </div>
 
             {/* Tags */}
-            <div>
+            <div className="relative group">
               <label
                 htmlFor="tags"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className={`absolute left-4 transition-all duration-300 pointer-events-none ${
+                  formData.tags
+                    ? "top-2 text-xs text-emerald-600 font-medium"
+                    : "top-1/2 -translate-y-1/2 text-gray-500"
+                } group-focus-within:top-2 group-focus-within:text-xs group-focus-within:text-emerald-600 group-focus-within:font-medium`}
               >
                 Tags
               </label>
@@ -178,87 +207,123 @@ const CreateProject = () => {
                 name="tags"
                 value={formData.tags}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-                placeholder="web, mobile, api (comma-separated)"
+                className="w-full px-4 pt-6 pb-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all duration-300 bg-gray-50/50 backdrop-blur-sm hover:border-emerald-300"
+                placeholder=""
               />
-              <p className="mt-1 text-sm text-gray-500">
-                Separate tags with commas (optional)
+              <p className="mt-2 text-sm text-gray-500 flex items-center space-x-1">
+                <span>🏷️</span>
+                <span>Separate tags with commas (optional)</span>
               </p>
             </div>
 
             {/* Team Members */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-4">
-                Team Members *
+              <label className="block text-lg font-semibold text-gray-800 mb-6 flex items-center space-x-2">
+                <span>👥</span>
+                <span>Team Members *</span>
               </label>
-              <div className="space-y-3 max-h-60 overflow-y-auto border border-gray-200 rounded-lg p-4">
-                {users.map((user) => (
+              <div className="space-y-4 max-h-80 overflow-y-auto border-2 border-gray-200 rounded-2xl p-6 bg-gray-50/50 backdrop-blur-sm">
+                {users.map((user, index) => (
                   <label
                     key={user._id}
-                    className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded"
+                    className={`flex items-center space-x-4 cursor-pointer p-4 rounded-2xl transition-all duration-300 hover:shadow-lg hover:bg-white/80 animate-slide-up ${
+                      formData.members.includes(user._id)
+                        ? "bg-gradient-to-r from-emerald-50 to-teal-50 border-2 border-emerald-200 shadow-md"
+                        : "hover:bg-white/60"
+                    }`}
+                    style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    <input
-                      type="checkbox"
-                      checked={formData.members.includes(user._id)}
-                      onChange={() => handleMemberChange(user._id)}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                    />
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={formData.members.includes(user._id)}
+                        onChange={() => handleMemberChange(user._id)}
+                        className="h-5 w-5 text-emerald-600 focus:ring-emerald-500 border-gray-300 rounded-lg opacity-0 absolute"
+                      />
+                      <div
+                        className={`h-5 w-5 border-2 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                          formData.members.includes(user._id)
+                            ? "bg-emerald-500 border-emerald-500"
+                            : "border-gray-300 hover:border-emerald-400"
+                        }`}
+                      >
+                        {formData.members.includes(user._id) && (
+                          <span className="text-white text-xs">✓</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                      {user.username.charAt(0).toUpperCase()}
+                    </div>
                     <div className="flex-1">
-                      <div className="flex items-center space-x-2">
-                        <span className="font-medium text-gray-900">
+                      <div className="flex items-center space-x-3">
+                        <span className="font-semibold text-gray-900 text-lg">
                           {user.username}
                         </span>
                         <span
-                          className={`px-2 py-1 text-xs rounded-full ${
+                          className={`px-3 py-1 text-xs rounded-full font-medium shadow-sm ${
                             user.role === "admin"
-                              ? "bg-purple-100 text-purple-800"
+                              ? "bg-gradient-to-r from-purple-100 to-purple-200 text-purple-800 border border-purple-300"
                               : user.role === "developer"
-                              ? "bg-blue-100 text-blue-800"
-                              : "bg-green-100 text-green-800"
+                              ? "bg-gradient-to-r from-blue-100 to-blue-200 text-blue-800 border border-blue-300"
+                              : "bg-gradient-to-r from-green-100 to-green-200 text-green-800 border border-green-300"
                           }`}
                         >
                           {user.role}
                         </span>
                       </div>
-                      <p className="text-sm text-gray-500">{user.email}</p>
+                      <p className="text-sm text-gray-600 mt-1">{user.email}</p>
                     </div>
                   </label>
                 ))}
               </div>
               {errors.members && (
-                <p className="mt-2 text-sm text-red-600">{errors.members}</p>
+                <p className="mt-3 text-sm text-red-600 flex items-center space-x-1">
+                  <span>⚠️</span>
+                  <span>{errors.members}</span>
+                </p>
               )}
             </div>
 
             {/* Submit Error */}
             {errors.submit && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <p className="text-sm text-red-600">{errors.submit}</p>
+              <div className="bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 rounded-2xl p-6 animate-pulse">
+                <p className="text-red-700 font-medium flex items-center space-x-2">
+                  <span>🚫</span>
+                  <span>{errors.submit}</span>
+                </p>
               </div>
             )}
 
             {/* Actions */}
-            <div className="flex justify-end space-x-4 pt-6">
+            <div className="flex justify-end space-x-6 pt-8 border-t border-gray-200">
               <button
                 type="button"
                 onClick={() => navigate("/projects")}
-                className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                className="px-8 py-4 border-2 border-gray-300 rounded-2xl text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 font-medium shadow-sm hover:shadow-md transform hover:scale-105"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="px-8 py-4 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 text-white rounded-2xl hover:from-emerald-600 hover:via-teal-600 hover:to-cyan-600 transition-all duration-300 font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-lg relative overflow-hidden group"
               >
-                {loading ? (
-                  <span className="flex items-center space-x-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    <span>Creating...</span>
-                  </span>
-                ) : (
-                  "Create Project"
-                )}
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <span className="relative flex items-center space-x-3">
+                  {loading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <span>Creating Project...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>✨</span>
+                      <span>Create Project</span>
+                      <span>🚀</span>
+                    </>
+                  )}
+                </span>
               </button>
             </div>
           </form>

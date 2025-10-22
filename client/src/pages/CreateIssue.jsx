@@ -47,7 +47,6 @@ const CreateIssue = () => {
       ...prev,
       [name]: value,
     }));
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
@@ -124,26 +123,40 @@ const CreateIssue = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container mx-auto px-4 max-w-2xl">
+    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 py-12 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-rose-400/20 to-pink-600/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-br from-purple-400/20 to-indigo-600/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-gradient-to-br from-pink-400/15 to-purple-600/15 rounded-full blur-3xl animate-pulse delay-500"></div>
+      </div>
+
+      <div className="container mx-auto px-4 max-w-2xl relative z-10">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            Create New Issue
-          </h1>
-          <p className="text-gray-600 text-lg">
+        <div className="mb-12 text-center">
+          <div className="inline-block">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-rose-600 via-pink-600 to-purple-600 bg-clip-text text-transparent mb-4 animate-fade-in">
+              Create New Issue
+            </h1>
+            <div className="w-full h-1 bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 rounded-full animate-scale-in"></div>
+          </div>
+          <p className="text-gray-600 text-xl mt-6 animate-fade-in delay-300">
             Report a bug or create a new task for your team
           </p>
         </div>
 
         {/* Form */}
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-10 border border-white/20 animate-fade-in delay-500">
+          <form onSubmit={handleSubmit} className="space-y-8">
             {/* Title */}
-            <div>
+            <div className="relative group">
               <label
                 htmlFor="title"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className={`absolute left-4 transition-all duration-300 pointer-events-none ${
+                  formData.title
+                    ? "top-2 text-xs text-rose-600 font-medium"
+                    : "top-1/2 -translate-y-1/2 text-gray-500"
+                } group-focus-within:top-2 group-focus-within:text-xs group-focus-within:text-rose-600 group-focus-within:font-medium`}
               >
                 Issue Title *
               </label>
@@ -153,21 +166,30 @@ const CreateIssue = () => {
                 name="title"
                 value={formData.title}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.title ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 pt-6 pb-3 border-2 rounded-2xl focus:ring-4 focus:ring-rose-500/20 focus:border-rose-500 transition-all duration-300 bg-gray-50/50 backdrop-blur-sm ${
+                  errors.title
+                    ? "border-red-400 bg-red-50/50"
+                    : "border-gray-200 hover:border-rose-300"
                 }`}
-                placeholder="Brief description of the issue"
+                placeholder=""
               />
               {errors.title && (
-                <p className="mt-1 text-sm text-red-600">{errors.title}</p>
+                <p className="mt-2 text-sm text-red-600 flex items-center space-x-1">
+                  <span>⚠️</span>
+                  <span>{errors.title}</span>
+                </p>
               )}
             </div>
 
             {/* Description */}
-            <div>
+            <div className="relative group">
               <label
                 htmlFor="description"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className={`absolute left-4 transition-all duration-300 pointer-events-none ${
+                  formData.description
+                    ? "top-2 text-xs text-rose-600 font-medium"
+                    : "top-6 text-gray-500"
+                } group-focus-within:top-2 group-focus-within:text-xs group-focus-within:text-rose-600 group-focus-within:font-medium`}
               >
                 Description *
               </label>
@@ -177,23 +199,30 @@ const CreateIssue = () => {
                 value={formData.description}
                 onChange={handleChange}
                 rows={6}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.description ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 pt-8 pb-3 border-2 rounded-2xl focus:ring-4 focus:ring-rose-500/20 focus:border-rose-500 transition-all duration-300 bg-gray-50/50 backdrop-blur-sm resize-none ${
+                  errors.description
+                    ? "border-red-400 bg-red-50/50"
+                    : "border-gray-200 hover:border-rose-300"
                 }`}
-                placeholder="Detailed description of the issue, steps to reproduce, expected vs actual behavior"
+                placeholder=""
               />
               {errors.description && (
-                <p className="mt-1 text-sm text-red-600">
-                  {errors.description}
+                <p className="mt-2 text-sm text-red-600 flex items-center space-x-1">
+                  <span>⚠️</span>
+                  <span>{errors.description}</span>
                 </p>
               )}
             </div>
 
             {/* Project Selection */}
-            <div>
+            <div className="relative group">
               <label
                 htmlFor="project"
-                className="block text-sm font-medium text-gray-700 mb-2"
+                className={`absolute left-4 transition-all duration-300 pointer-events-none ${
+                  formData.project
+                    ? "top-2 text-xs text-rose-600 font-medium"
+                    : "top-1/2 -translate-y-1/2 text-gray-500"
+                } group-focus-within:top-2 group-focus-within:text-xs group-focus-within:text-rose-600 group-focus-within:font-medium`}
               >
                 Project *
               </label>
@@ -202,8 +231,10 @@ const CreateIssue = () => {
                 name="project"
                 value={formData.project}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors ${
-                  errors.project ? "border-red-500" : "border-gray-300"
+                className={`w-full px-4 pt-6 pb-3 border-2 rounded-2xl focus:ring-4 focus:ring-rose-500/20 focus:border-rose-500 transition-all duration-300 bg-gray-50/50 backdrop-blur-sm appearance-none ${
+                  errors.project
+                    ? "border-red-400 bg-red-50/50"
+                    : "border-gray-200 hover:border-rose-300"
                 }`}
               >
                 <option value="">Select a project</option>
@@ -213,67 +244,88 @@ const CreateIssue = () => {
                   </option>
                 ))}
               </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                ▼
+              </div>
               {errors.project && (
-                <p className="mt-1 text-sm text-red-600">{errors.project}</p>
+                <p className="mt-2 text-sm text-red-600 flex items-center space-x-1">
+                  <span>⚠️</span>
+                  <span>{errors.project}</span>
+                </p>
               )}
             </div>
 
             {/* Severity and Priority Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Severity */}
-              <div>
-                <label
-                  htmlFor="severity"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Severity
+              <div className="space-y-3">
+                <label className="block text-lg font-semibold text-gray-800 flex items-center space-x-2">
+                  <span>⚠️</span>
+                  <span>Severity</span>
                 </label>
                 <select
                   id="severity"
                   name="severity"
                   value={formData.severity}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-rose-500/20 focus:border-rose-500 transition-all duration-300 bg-gray-50/50 backdrop-blur-sm hover:border-rose-300 appearance-none"
                 >
                   <option value="Low">Low</option>
                   <option value="Medium">Medium</option>
                   <option value="High">High</option>
                   <option value="Critical">Critical</option>
                 </select>
-                <div className="mt-2">
+                <div className="flex items-center space-x-2">
                   <span
-                    className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${getSeverityColor(
-                      formData.severity
-                    )}`}
+                    className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold border-2 shadow-lg animate-pulse ${
+                      formData.severity === "Low"
+                        ? "bg-gradient-to-r from-green-100 to-emerald-100 text-green-800 border-green-300"
+                        : formData.severity === "Medium"
+                        ? "bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-800 border-yellow-300"
+                        : formData.severity === "High"
+                        ? "bg-gradient-to-r from-orange-100 to-red-100 text-orange-800 border-orange-300"
+                        : "bg-gradient-to-r from-red-100 to-pink-100 text-red-800 border-red-300"
+                    }`}
                   >
+                    <span className="mr-2">
+                      {formData.severity === "Low"
+                        ? "🟢"
+                        : formData.severity === "Medium"
+                        ? "🟡"
+                        : formData.severity === "High"
+                        ? "🟠"
+                        : "🔴"}
+                    </span>
                     {formData.severity}
                   </span>
                 </div>
               </div>
 
               {/* Priority */}
-              <div>
-                <label
-                  htmlFor="priority"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Priority
+              <div className="space-y-3">
+                <label className="block text-lg font-semibold text-gray-800 flex items-center space-x-2">
+                  <span>🎯</span>
+                  <span>Priority</span>
                 </label>
                 <select
                   id="priority"
                   name="priority"
                   value={formData.priority}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-rose-500/20 focus:border-rose-500 transition-all duration-300 bg-gray-50/50 backdrop-blur-sm hover:border-rose-300 appearance-none"
                 >
                   <option value="P1">P1 - Critical</option>
                   <option value="P2">P2 - High</option>
                   <option value="P3">P3 - Normal</option>
                 </select>
-                <div className="mt-2">
-                  <span className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 rounded-full text-xs font-medium border border-blue-300">
-                    <span className="mr-1">
-                      {getPriorityIcon(formData.priority)}
+                <div className="flex items-center space-x-2">
+                  <span className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 text-blue-800 rounded-full text-sm font-semibold border-2 border-blue-300 shadow-lg">
+                    <span className="mr-2 text-lg">
+                      {formData.priority === "P1"
+                        ? "🚨"
+                        : formData.priority === "P2"
+                        ? "⚡"
+                        : "📋"}
                     </span>
                     {formData.priority}
                   </span>
@@ -282,63 +334,77 @@ const CreateIssue = () => {
             </div>
 
             {/* Assignee */}
-            <div>
-              <label
-                htmlFor="assignee"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
-                Assign To (Optional)
+            <div className="space-y-3">
+              <label className="block text-lg font-semibold text-gray-800 flex items-center space-x-2">
+                <span>👤</span>
+                <span>Assign To (Optional)</span>
               </label>
-              <select
-                id="assignee"
-                name="assignee"
-                value={formData.assignee}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
-              >
-                <option value="">Unassigned</option>
-                {users
-                  .filter((u) => u.role === "developer")
-                  .map((developer) => (
-                    <option key={developer._id} value={developer._id}>
-                      {developer.username} ({developer.email})
-                    </option>
-                  ))}
-              </select>
-              <p className="mt-1 text-sm text-gray-500">
-                Only developers can be assigned to issues
+              <div className="relative group">
+                <select
+                  id="assignee"
+                  name="assignee"
+                  value={formData.assignee}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-2xl focus:ring-4 focus:ring-rose-500/20 focus:border-rose-500 transition-all duration-300 bg-gray-50/50 backdrop-blur-sm hover:border-rose-300 appearance-none"
+                >
+                  <option value="">Unassigned</option>
+                  {users
+                    .filter((u) => u.role === "developer")
+                    .map((developer) => (
+                      <option key={developer._id} value={developer._id}>
+                        {developer.username} ({developer.email})
+                      </option>
+                    ))}
+                </select>
+                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                  ▼
+                </div>
+              </div>
+              <p className="text-sm text-gray-500 flex items-center space-x-1">
+                <span>💡</span>
+                <span>Only developers can be assigned to issues</span>
               </p>
             </div>
 
             {/* Submit Error */}
             {errors.submit && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                <p className="text-sm text-red-600">{errors.submit}</p>
+              <div className="bg-gradient-to-r from-red-50 to-pink-50 border-2 border-red-200 rounded-2xl p-6 animate-pulse">
+                <p className="text-red-700 font-medium flex items-center space-x-2">
+                  <span>🚫</span>
+                  <span>{errors.submit}</span>
+                </p>
               </div>
             )}
 
             {/* Actions */}
-            <div className="flex justify-end space-x-4 pt-6">
+            <div className="flex justify-end space-x-6 pt-8 border-t border-gray-200">
               <button
                 type="button"
                 onClick={() => navigate("/issues")}
-                className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                className="px-8 py-4 border-2 border-gray-300 rounded-2xl text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-300 font-medium shadow-sm hover:shadow-md transform hover:scale-105"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="px-8 py-4 bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 text-white rounded-2xl hover:from-rose-600 hover:via-pink-600 hover:to-purple-600 transition-all duration-300 font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none disabled:shadow-lg relative overflow-hidden group"
               >
-                {loading ? (
-                  <span className="flex items-center space-x-2">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                    <span>Creating...</span>
-                  </span>
-                ) : (
-                  "Create Issue"
-                )}
+                <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <span className="relative flex items-center space-x-3">
+                  {loading ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                      <span>Creating Issue...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>🐛</span>
+                      <span>Create Issue</span>
+                      <span>🚀</span>
+                    </>
+                  )}
+                </span>
               </button>
             </div>
           </form>

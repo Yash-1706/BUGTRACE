@@ -20,7 +20,6 @@ const ProjectDetails = () => {
         ]);
 
         setProject(projectData);
-        // Filter issues for this project
         setIssues(issuesData.filter((issue) => issue.project?._id === id));
       } catch (error) {
         console.error("Failed to fetch project data:", error);
