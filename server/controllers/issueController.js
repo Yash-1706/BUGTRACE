@@ -40,7 +40,7 @@ const getIssue = async (req, res) => {
 // @route   POST /api/issues
 // @access  Private/Tester
 const createIssue = async (req, res) => {
-  const { title, description, severity, priority, project, attachments } = req.body;
+  const { title, description, severity, priority, project } = req.body;
 
   try {
     const issue = await Issue.create({
@@ -50,7 +50,6 @@ const createIssue = async (req, res) => {
       priority,
       reporter: req.user._id,
       project,
-      attachments,
     });
 
     // Add issue to project

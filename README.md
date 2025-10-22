@@ -19,8 +19,6 @@ A modern bug and issue tracking platform built with the MERN stack (MongoDB, Exp
 - MongoDB with Mongoose ODM
 - JWT Authentication
 - bcrypt for password hashing
-- Multer for file uploads
-- Cloudinary for image storage
 
 ### Frontend
 - React.js with React Router

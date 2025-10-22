@@ -36,7 +36,6 @@ const issueSchema = new mongoose.Schema({
     ref: 'Project',
     required: true,
   },
-  attachments: [String],
   comments: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment',
