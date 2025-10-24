@@ -5,6 +5,6 @@ const { protect, authorize } = require('../middleware/authMiddleware');
 
 router.post('/register', registerUser);
 router.post('/login', loginUser);
-router.get('/users', protect, authorize('admin'), getUsers);
+router.get('/users', protect, getUsers); // Allow all authenticated users to view users list
 
 module.exports = router;
