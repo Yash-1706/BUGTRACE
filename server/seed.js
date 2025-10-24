@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 const User = require('./models/User');
 const Project = require('./models/Project');
 const Issue = require('./models/Issue');
@@ -23,24 +24,28 @@ const seedData = async () => {
     await Issue.deleteMany();
     await Comment.deleteMany();
 
+    // Hash password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash('password123', salt);
+
     // Create users
     const users = await User.create([
       {
         username: 'admin',
         email: 'admin@bugtrace.com',
-        password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password123
+        password: hashedPassword,
         role: 'admin',
       },
       {
         username: 'developer1',
         email: 'dev@bugtrace.com',
-        password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+        password: hashedPassword,
         role: 'developer',
       },
       {
         username: 'tester1',
         email: 'tester@bugtrace.com',
-        password: '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
+        password: hashedPassword,
         role: 'tester',
       },
     ]);
