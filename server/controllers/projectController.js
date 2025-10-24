@@ -1,5 +1,6 @@
 const Project = require('../models/Project');
 const User = require('../models/User');
+const { logError } = require('../utils/logger');
 
 // @desc    Get all projects
 // @route   GET /api/projects
@@ -9,7 +10,8 @@ const getProjects = async (req, res) => {
     const projects = await Project.find({}).populate('members', 'username email role');
     res.json(projects);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    logError('Failed to fetch projects', error);
+    res.status(500).json({ message: 'Failed to fetch projects' });
   }
 };
 
@@ -24,7 +26,8 @@ const getProject = async (req, res) => {
     }
     res.json(project);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    logError('Failed to fetch project', error);
+    res.status(500).json({ message: 'Failed to fetch project' });
   }
 };
 
@@ -52,7 +55,8 @@ const createProject = async (req, res) => {
 
     res.status(201).json(project);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    logError('Failed to create project', error);
+    res.status(500).json({ message: 'Failed to create project' });
   }
 };
 
@@ -66,14 +70,43 @@ const updateProject = async (req, res) => {
     if (!project) {
       return res.status(404).json({ message: 'Project not found' });
     }
+    const { name, description, tags, members } = req.body;
 
-    const updatedProject = await Project.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+    if (name) project.name = name;
+    if (description !== undefined) project.description = description;
+    if (tags) project.tags = Array.isArray(tags) ? tags : tags.split(',').map((tag) => tag.trim()).filter(Boolean);
 
-    res.json(updatedProject);
+    if (members) {
+      const memberIds = Array.isArray(members) ? members : [];
+      const currentMemberIds = project.members.map((member) => member.toString());
+      const toAdd = memberIds.filter((id) => !currentMemberIds.includes(id));
+      const toRemove = currentMemberIds.filter((id) => !memberIds.includes(id));
+
+      project.members = memberIds;
+
+      if (toAdd.length > 0) {
+        await User.updateMany(
+          { _id: { $in: toAdd } },
+          { $addToSet: { assignedProjects: project._id } }
+        );
+      }
+
+      if (toRemove.length > 0) {
+        await User.updateMany(
+          { _id: { $in: toRemove } },
+          { $pull: { assignedProjects: project._id } }
+        );
+      }
+    }
+
+    await project.save();
+
+    const populatedProject = await Project.findById(req.params.id).populate('members', 'username email role').populate('issues');
+
+    res.json(populatedProject);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    logError('Failed to update project', error);
+    res.status(500).json({ message: 'Failed to update project' });
   }
 };
 
@@ -98,7 +131,8 @@ const deleteProject = async (req, res) => {
 
     res.json({ message: 'Project removed' });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    logError('Failed to delete project', error);
+    res.status(500).json({ message: 'Failed to delete project' });
   }
 };
 

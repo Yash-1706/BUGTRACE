@@ -24,6 +24,7 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/projects', require('./routes/projectRoutes'));
 app.use('/api/issues', require('./routes/issueRoutes'));
+app.use('/api/analytics', require('./routes/analyticsRoutes'));
 
 // Test route
 app.get('/test', (req, res) => {

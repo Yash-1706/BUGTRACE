@@ -242,18 +242,6 @@ Issues by severity
 
 Project activity heatmap
 
-10. Enhancements (Optional)
-
-Real-time updates using Socket.io
-
-Dark/Light mode toggle
-
-AI-generated bug summaries (OpenAI API)
-
-Email notifications (Nodemailer + Mailtrap)
-
-Role invitation via unique email link
-
 11. Success Criteria
 
 Fully deployed on Render/Vercel

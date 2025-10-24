@@ -1,5 +1,6 @@
 const Comment = require('../models/Comment');
 const Issue = require('../models/Issue');
+const { logError } = require('../utils/logger');
 
 // @desc    Get comments for an issue
 // @route   GET /api/issues/:id/comments
@@ -9,7 +10,8 @@ const getComments = async (req, res) => {
     const comments = await Comment.find({ issue: req.params.id }).populate('author', 'username email');
     res.json(comments);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    logError('Failed to fetch comments', error);
+    res.status(500).json({ message: 'Failed to fetch comments' });
   }
 };
 
@@ -36,7 +38,8 @@ const addComment = async (req, res) => {
 
     res.status(201).json(populatedComment);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    logError('Failed to add comment', error);
+    res.status(500).json({ message: 'Failed to add comment' });
   }
 };
 
