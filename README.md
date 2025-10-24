@@ -65,19 +65,31 @@ Create a `.env` file in the `server` directory:
 
 ```env
 NODE_ENV=development
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/bugtrace
+PORT=5001
+MONGO_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret_here
+CLOUDINARY_CLOUD_NAME=disabled
+CLOUDINARY_API_KEY=disabled
+CLOUDINARY_API_SECRET=disabled
 ```
 
-5. Start the backend server
+5. Seed the database with demo data (optional)
 
 ```bash
 cd server
+node seed.js
+```
+
+6. Start the backend server
+
+```bash
+cd server
+npm start
+# or for development with auto-reload
 npm run dev
 ```
 
-6. Start the frontend (in a new terminal)
+7. Start the frontend (in a new terminal)
 
 ```bash
 cd client
@@ -85,6 +97,8 @@ npm start
 ```
 
 The application will be available at `http://localhost:3000`
+
+**Note**: The frontend is configured to proxy API requests to `http://localhost:5001`
 
 ## API Endpoints
 
