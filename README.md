@@ -125,6 +125,14 @@ The application will be available at `http://localhost:3000`
 - `GET /api/issues/:id/comments` - Get comments for issue
 - `POST /api/issues/:id/comments` - Add comment
 
+### Analytics
+
+- `GET /api/analytics/overview` - Get dashboard analytics and metrics
+
+### Users
+
+- `GET /api/auth/users` - Get all users (for assignment dropdowns)
+
 ## User Roles & Permissions
 
 | Role      | Permissions                            |
